@@ -10,9 +10,9 @@ const generateToken = (id) => {
 };
 
 const register = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, gender } = req.body;
 
-  if (!username || !password) {
+  if (!username || !password || !gender) {
     res.status(400).json("All fields is required");
   }
 
@@ -29,6 +29,7 @@ const register = asyncHandler(async (req, res) => {
   const user = await User.create({
     username,
     password: hashedPassword,
+    gender,
   });
 
   if (user) {

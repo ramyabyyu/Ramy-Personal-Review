@@ -10,6 +10,7 @@ const Auth = () => {
   const [userData, setUserData] = useState({
     username: "",
     password: "",
+    gender: "",
   });
 
   const switchMode = () => {
@@ -97,6 +98,25 @@ const Auth = () => {
                   {showPassword ? "Hide" : "Show"} Password
                 </button>
               </Form.Group>
+
+              {/* Gender */}
+              {isRegister && (
+                <Form.Group className="mb-5">
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Select
+                    name="gender"
+                    onChange={handleChange}
+                    value={userData.gender}
+                  >
+                    <option selected disabled>
+                      Select Gender
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Secret">Secret</option>
+                  </Form.Select>
+                </Form.Group>
+              )}
 
               {/* Buttons */}
               <div className="mb-3 d-flex flex-column align-items-center">

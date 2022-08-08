@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
+import male from "../image/male.png";
+import female from "../image/female.png";
+import secret from "../image/secret.jpg";
 
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  let userAvatar;
+
+  if (user?.user.gender === "Male") userAvatar = male;
+  else if (user?.user.gender === "Female") userAvatar = female;
+  else userAvatar = secret;
 
   // Modal
   const [show, setShow] = useState(false);
@@ -21,12 +29,23 @@ const Home = () => {
     <Container>
       {user ? (
         <div className="d-flex mb-5 flex-column">
-          <div>
-            <h3>Hello {user.user.username}</h3>
-            <p>
-              Here you can write what Good or Bad things about Ramy, please
-              write it honestly
-            </p>
+          <div className="d-flex mb-4 align-items-center">
+            <div className="me-3">
+              <img
+                src={userAvatar}
+                alt="avatar"
+                width="80"
+                height="80"
+                style={{ objectFit: "cover", borderRadius: "50%" }}
+              />
+            </div>
+            <div>
+              <h3>Hello {user.user.username}</h3>
+              <p>
+                Here you can write what Good or Bad things about Ramy, please
+                write it honestly
+              </p>
+            </div>
           </div>
           <div>
             <Link className="btn btn-success me-3" to="/create">
