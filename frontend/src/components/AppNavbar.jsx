@@ -5,7 +5,7 @@ const AppNavbar = () => {
   return (
     <Navbar bg="secondary" expand="lg" variant="dark" className="mb-5">
       <Container>
-        <Navbar.Brand href="/">Personal Review</Navbar.Brand>
+        <Navbar.Brand href="/">Ramy Personal Review</Navbar.Brand>
       </Container>
     </Navbar>
   );
