@@ -5,8 +5,7 @@ const createReview = asyncHandler(async (req, res) => {
   const { good, bad } = req.body;
 
   if (!good || !bad) {
-    res.status(400);
-    throw new Error("All Fields is Required");
+    res.status(400).json("All fields is required");
   }
 
   const review = await Review.create({
@@ -18,9 +17,7 @@ const createReview = asyncHandler(async (req, res) => {
   if (review) {
     res.status(201).json(review);
   } else {
-    res.status(400).json({
-      message: "Invalid Input",
-    });
+    res.status(400).json("Invalid Input");
   }
 });
 

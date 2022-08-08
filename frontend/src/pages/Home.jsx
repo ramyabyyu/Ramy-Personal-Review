@@ -1,19 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
+  // Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  // Logout
+  const logout = async () => {
+    localStorage.removeItem("user");
+  };
+
   return (
     <Container>
       {user ? (
-        <div className="d-flex mb-5">
-          <h3 className="me-5">Hello {user.user.username}</h3>
-          <Link className="btn btn-success mb-5" to="/create">
-            Add New Review
-          </Link>
+        <div className="d-flex mb-5 flex-column">
+          <div>
+            <h3>Hello {user.user.username}</h3>
+            <p>
+              Here you can write what Good or Bad things about Ramy, please
+              write it honestly
+            </p>
+          </div>
+          <div>
+            <Link className="btn btn-success me-3" to="/create">
+              Add New Review
+            </Link>
+            <Button variant="dark" type="button" onClick={handleShow}>
+              Logout
+            </Button>
+            <ConfirmModal
+              modalTitle="Logout"
+              modalBody="Are you sure want to logout?"
+              handleConfirm={logout}
+              handleClose={handleClose}
+              show={show}
+            />
+          </div>
         </div>
       ) : (
         <h5 className="mb-3">

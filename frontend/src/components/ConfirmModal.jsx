@@ -7,25 +7,22 @@ const ConfirmModal = ({
   handleConfirm,
   show,
   handleClose,
-  confirmBtnType,
 }) => {
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className="text-dark">
       <Modal.Header>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{modalBody}</Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={handleConfirm}
-          type={confirmBtnType}
-        >
-          Confirm
-        </Button>
+        <form action="">
+          <Button variant="danger" onClick={handleClose} className="me-2">
+            Cancel
+          </Button>
+          <Button variant="secondary" onClick={handleConfirm} type="submit">
+            Confirm
+          </Button>
+        </form>
       </Modal.Footer>
     </Modal>
   );

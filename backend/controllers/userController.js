@@ -13,16 +13,14 @@ const register = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(400);
-    throw new Error("All Fields is Required");
+    res.status(400).json("All fields is required");
   }
 
   //   check if username already exist
   const oldUser = await User.findOne({ username });
 
   if (oldUser) {
-    res.status(400);
-    throw new Error("Username already exist");
+    res.status(400).json("Username already exist");
   }
 
   const salt = await bcrypt.genSalt(12);
@@ -39,8 +37,7 @@ const register = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid User Data");
+    res.status(400).json("Invalid user data");
   }
 });
 
@@ -48,16 +45,14 @@ const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(400);
-    throw new Error("All field is required");
+    res.status(400).json("All fields is required");
   }
 
   //   check username
   const oldUser = await User.findOne({ username });
 
   if (!oldUser) {
-    res.status(400);
-    throw new Error("Username is incorrect");
+    res.status(400).json("Username is incorrect");
   } else {
     const isPwCorrect = await bcrypt.compare(password, oldUser.password);
     if (isPwCorrect) {
@@ -66,8 +61,7 @@ const login = asyncHandler(async (req, res) => {
         token: generateToken(oldUser._id),
       });
     } else {
-      res.status(400);
-      throw new Error("Password is incorrect");
+      res.status(400).json("Password is incorrect");
     }
   }
 });

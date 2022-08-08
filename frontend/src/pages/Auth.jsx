@@ -11,8 +11,6 @@ const Auth = () => {
     username: "",
     password: "",
   });
-  const [authError, setAuthError] = useState(false);
-  const [authErrorMsg, setAuthErrorMsg] = useState("");
 
   const switchMode = () => {
     setIsRegister(!isRegister);
@@ -57,20 +55,6 @@ const Auth = () => {
     <Container>
       <Row>
         <Col md={8}>
-          {authError && (
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              <strong>{authErrorMsg}</strong>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div>
-          )}
           <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
             <Card.Header>
               <h3 className="text-center">
@@ -79,7 +63,7 @@ const Auth = () => {
             </Card.Header>
             <Form onSubmit={onSubmit} autoComplete="off" method="POST">
               {/* Username  */}
-              <Form.Group className="mb-3" controlId="username">
+              <Form.Group className="mb-3">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
@@ -96,7 +80,7 @@ const Auth = () => {
               </Form.Group>
 
               {/* Password */}
-              <Form.Group className="mb-3" controlId="password">
+              <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type={showPassword ? "text" : "password"}
