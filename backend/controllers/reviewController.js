@@ -1,5 +1,6 @@
 const Review = require("../models/reviewModel");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
 const createReview = asyncHandler(async (req, res) => {
   const { good, bad } = req.body;
@@ -12,6 +13,8 @@ const createReview = asyncHandler(async (req, res) => {
     good,
     bad,
     user: req.user._id,
+    userGender: req.user.gender,
+    createdAt: new Date(),
   });
 
   if (review) {
@@ -21,6 +24,19 @@ const createReview = asyncHandler(async (req, res) => {
   }
 });
 
+const getReviews = asyncHandler(async (req, res) => {
+  const reviews = await Review.find({}, null, {
+    sort: { _id: -1 },
+  }).exec();
+
+  if (reviews) {
+    res.status(200).json(reviews);
+  } else {
+    res.status(500).json("Server Error");
+  }
+});
+
 module.exports = {
   createReview,
+  getReviews,
 };

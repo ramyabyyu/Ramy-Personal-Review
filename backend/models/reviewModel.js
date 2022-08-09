@@ -14,10 +14,8 @@ const reviewSchema = mongoose.Schema({
     required: true,
     ref: "users",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
+  createdAt: Date,
+  userGender: String,
 });
 
 const Review = mongoose.model("reviews", reviewSchema);

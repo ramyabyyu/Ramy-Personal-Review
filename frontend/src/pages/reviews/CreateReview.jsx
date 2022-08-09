@@ -22,7 +22,7 @@ const CreateReview = () => {
   const [reviewData, setReviewData] = useState({ good: [], bad: [] });
 
   // Modal
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

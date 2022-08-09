@@ -2,18 +2,34 @@ import React, { useState } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
-import male from "../image/male.png";
-import female from "../image/female.png";
-import secret from "../image/secret.jpg";
+import Male from "../image/male.png";
+import Female from "../image/female.png";
+import Secret from "../image/secret.jpg";
+import { useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
 
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  let userAvatar;
+  const [postReviews, setPostReviews] = useState([]);
 
-  if (user?.user.gender === "Male") userAvatar = male;
-  else if (user?.user.gender === "Female") userAvatar = female;
-  else userAvatar = secret;
+  const userAvatar = (gender) => {
+    let ava;
+
+    if (gender === "Male") ava = Male;
+    else if (gender === "Female") ava = Female;
+    else ava = Secret;
+
+    return ava;
+  };
+
+  useEffect(() => {
+    axios
+      .get("/review")
+      .then((response) => setPostReviews(response.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   // Modal
   const [show, setShow] = useState(false);
@@ -32,7 +48,7 @@ const Home = () => {
           <div className="d-flex mb-4 align-items-center">
             <div className="me-3">
               <img
-                src={userAvatar}
+                src={userAvatar(user?.user.gender)}
                 alt="avatar"
                 width="80"
                 height="80"
@@ -73,39 +89,56 @@ const Home = () => {
         </h5>
       )}
       <Row>
-        <Col md={12} className="mb-5">
-          <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
-            <Card.Header>
-              <h3>Someone</h3>
-            </Card.Header>
-            <Card.Body>
-              <div className="d-flex flex-column">
-                <div className="mb-5">
-                  <Card.Text>
-                    For me, <strong>Good</strong> things about Ramy is :{" "}
-                  </Card.Text>
-                  <ListGroup>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                  </ListGroup>
+        {postReviews.map((post, index) => (
+          <Col md={12} className="mb-5" key={index}>
+            <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
+              <Card.Header>
+                <div className="d-flex align-items-center">
+                  <div className="me-4">
+                    <img
+                      src={userAvatar(post.userGender)}
+                      alt="gender"
+                      style={{
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        width: "100px",
+                        height: "100px",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <h3>Someone</h3>
+                    <p>{moment(post.createdAt).fromNow()}</p>
+                  </div>
                 </div>
-                <div>
-                  <Card.Text>
-                    And <strong>Bad</strong> things about Ramy is :{" "}
-                  </Card.Text>
-                  <ListGroup>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                    <ListGroup.Item>Apa</ListGroup.Item>
-                  </ListGroup>
+              </Card.Header>
+              <Card.Body>
+                <div className="d-flex flex-column">
+                  <div className="mb-5">
+                    <Card.Text>
+                      For me, <strong>Good</strong> things about Ramy is :{" "}
+                    </Card.Text>
+                    <ListGroup>
+                      {post.good.map((g, i) => (
+                        <ListGroup.Item key={i}>{g}</ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </div>
+                  <div>
+                    <Card.Text>
+                      And <strong>Bad</strong> things about Ramy is :{" "}
+                    </Card.Text>
+                    <ListGroup>
+                      {post.bad.map((b, i) => (
+                        <ListGroup.Item key={i}>{b}</ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </div>
                 </div>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
       </Row>
     </Container>
   );
