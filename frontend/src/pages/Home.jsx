@@ -89,7 +89,7 @@ const Home = () => {
         </h5>
       )}
       <Row>
-        {postReviews.map((post, index) => (
+        {postReviews?.map((post, index) => (
           <Col md={12} className="mb-5" key={index}>
             <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
               <Card.Header>
