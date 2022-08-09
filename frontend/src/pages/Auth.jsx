@@ -42,6 +42,7 @@ const Auth = () => {
         })
         .catch((err) => console.log(err));
     } else {
+      // console.log(userData);
       axios
         .post("/login", userData)
         .then((response) => {
