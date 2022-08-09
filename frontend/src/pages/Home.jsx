@@ -89,56 +89,57 @@ const Home = () => {
         </h5>
       )}
       <Row>
-        {postReviews?.map((post, index) => (
-          <Col md={12} className="mb-5" key={index}>
-            <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
-              <Card.Header>
-                <div className="d-flex align-items-center">
-                  <div className="me-4">
-                    <img
-                      src={userAvatar(post.userGender)}
-                      alt="gender"
-                      style={{
-                        objectFit: "cover",
-                        borderRadius: "50%",
-                        width: "100px",
-                        height: "100px",
-                      }}
-                    />
+        {postReviews.length > 0 &&
+          postReviews.map((post, index) => (
+            <Col md={12} className="mb-5" key={index}>
+              <Card className="border-1 border-secondary rounded shadow p-5 bg-dark text-white">
+                <Card.Header>
+                  <div className="d-flex align-items-center">
+                    <div className="me-4">
+                      <img
+                        src={userAvatar(post.userGender)}
+                        alt="gender"
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                          width: "100px",
+                          height: "100px",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <h3>Someone</h3>
+                      <p>{moment(post.createdAt).fromNow()}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3>Someone</h3>
-                    <p>{moment(post.createdAt).fromNow()}</p>
+                </Card.Header>
+                <Card.Body>
+                  <div className="d-flex flex-column">
+                    <div className="mb-5">
+                      <Card.Text>
+                        For me, <strong>Good</strong> things about Ramy is :{" "}
+                      </Card.Text>
+                      <ListGroup>
+                        {post.good.map((g, i) => (
+                          <ListGroup.Item key={i}>{g}</ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    </div>
+                    <div>
+                      <Card.Text>
+                        And <strong>Bad</strong> things about Ramy is :{" "}
+                      </Card.Text>
+                      <ListGroup>
+                        {post.bad.map((b, i) => (
+                          <ListGroup.Item key={i}>{b}</ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    </div>
                   </div>
-                </div>
-              </Card.Header>
-              <Card.Body>
-                <div className="d-flex flex-column">
-                  <div className="mb-5">
-                    <Card.Text>
-                      For me, <strong>Good</strong> things about Ramy is :{" "}
-                    </Card.Text>
-                    <ListGroup>
-                      {post.good.map((g, i) => (
-                        <ListGroup.Item key={i}>{g}</ListGroup.Item>
-                      ))}
-                    </ListGroup>
-                  </div>
-                  <div>
-                    <Card.Text>
-                      And <strong>Bad</strong> things about Ramy is :{" "}
-                    </Card.Text>
-                    <ListGroup>
-                      {post.bad.map((b, i) => (
-                        <ListGroup.Item key={i}>{b}</ListGroup.Item>
-                      ))}
-                    </ListGroup>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
       </Row>
     </Container>
   );
